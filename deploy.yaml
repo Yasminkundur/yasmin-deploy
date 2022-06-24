@@ -3,24 +3,47 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: ashuapp1
-  name: ashuapp1
+    app: yasminapp1
+  name: yasminapp1
+  namespace: yasmin-project
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ashuapp1
+      app: yasminapp1
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: ashuapp1
+        app: yasminapp1
     spec:
       containers:
-      - image: dockerashu/ashumobi:appv1
-        name: ashumobi
+      - image: yasminmobileum/yasminmobi:appv1
+        name: yasminmobi
         ports:
         - containerPort: 80
         resources: {}
+        imagePullPolicy: Always
 status: {}
+#adding service with nodeport
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: yasminc1
+  name: yasminc1
+  namespace: yasmin-project
+spec:
+  ports:
+  - name: 1323-80
+    port: 1323
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: yasminapp1
+  type: NodePort
+status:
+  loadBalancer: {}
